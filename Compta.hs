@@ -6,14 +6,13 @@ module Compta (
   TypeSolde(..),
   solde,
   somme,
-  soldeToFrac,
   soldeToString,
-  fracToSolde,
   comptaFile)
     where
 
 import FunctionalTools.Unicode
 import Data.Time
+import Text.Printf
 
 type Solde = Int
 type Compta = [LigneBilan]
@@ -58,14 +57,8 @@ somme = fmap sum ∘
         mapM (solde ∘ typeSolde) ∘
         filter activé
 
-soldeToFrac ∷ (Fractional γ) ⇒ Solde → γ
-soldeToFrac = (÷ 100) ∘ fromIntegral
-
 soldeToString ∷ Solde → String
-soldeToString = show ∘ (soldeToFrac ∷ Solde → Double)
-
-fracToSolde ∷ (RealFrac γ) ⇒ γ → Solde
-fracToSolde = round ∘ (⋅100)
+soldeToString = printf "%.2f €" ∘ (÷ (100 ∷ Double)) ∘ fromIntegral
 
 comptaFile ∷ FilePath
 comptaFile = "/home/navaati/.local/share/compta/perso.dat"
