@@ -10,7 +10,8 @@ module Compta (
   comptaFile)
     where
 
-import FunctionalTools.Unicode
+import Prelude.Unicode
+import Control.Monad.Unicode
 import Data.Time
 import Text.Printf
 
